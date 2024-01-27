@@ -1,0 +1,14 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import '/node_modules/xterm/css/xterm.css';
+
+body {
+  font-family: Lato, 'Hiragino Maru Gothic Pro', 'Meiryo UI', Meiryo, 'MS PGothic', sans-serif;
+  color: #1c3746;
+  -webkit-font-smoothing: antialiased;
+}
+
+body p {
+  font-weight: 400;
+}

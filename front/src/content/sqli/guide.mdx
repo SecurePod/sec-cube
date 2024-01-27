@@ -1,0 +1,74 @@
+# SQLインジェクションで管理者アカウントにログインしよう
+
+攻撃対象サーバのIPアドレス : {props.targetIp}
+
+<br></br>
+
+今回の目標はSQLインジェクションの脆弱性を利用して`admin`ユーザーでログインすることです。
+
+<br></br>
+
+まずは通常の状態でログインを試してみましょう。Usernameに`admin`、Passwordに適当な文字列を入れてログインしてみてください。
+ログインに失敗することがわかります
+<br></br>
+
+次にSQLインジェクションの脆弱性を見つけに行きます。
+Editorタブからコードを確認すると以下のようになっています。
+
+```php
+$name = $_POST['name'];
+$pass = $_POST['password'];    
+$sql = "SELECT * FROM users WHERE name = '$name' AND password = '$pass';";
+$dbh = new PDO($dsn, $user, $password);
+$result = $dbh->query($sql);
+$result = $result->fetch();
+```
+
+<br></br>
+
+このコードに対してnameに`admin`、passに`' OR 1=1; --`という文字列が入った場合どうなるでしょうか。
+SQL文は以下の通りになります。
+
+```sql
+SELECT * FROM users WHERE name = 'admin' AND password = '' OR 1=1; --';
+```
+
+このSQLが実行されるとnameで指定した`admin`と一致するユーザーが存在するかどうかを確認し、その後`OR 1=1`が実行されます。`OR 1=1`は常に真となるので、このSQL文は常に真を返します。そのため、`admin`ユーザーのパスワードを知らなくてもログインすることができます。
+
+<br></br>
+
+百聞は一見にしかずなので、実際に攻撃してみましょう。
+
+```bash
+Username : admin
+Password : ' OR 1=1;--
+```
+
+<br></br>
+
+`admin`ユーザーでログインができたら答えとなる文字列が表示されるはずです。
+
+<br></br>
+
+
+
+# SQLiの修正
+
+```php
+if (isset($_POST['name']) && isset($_POST['password'])) {
+  $dbh = new PDO($dsn, $user, $password);
+  $stmt = $dbh->prepare("SELECT * FROM users WHERE name = :name AND password = :password");
+  $stmt->bindParam(':name', $_POST['name'], PDO::PARAM_STR);
+  $stmt->bindParam(':password', $_POST['password'], PDO::PARAM_STR);
+  $stmt->execute();
+  $result = $stmt->fetch();
+
+  if ($result) {
+    $msg = 'ログインしました。<br>sqli_is_easy';
+    $link = '<a href="index.php">ホーム</a>';
+  } else {
+    $msg = 'ユーザーネームもしくはパスワードが間違っています。';
+    $link = '<a href="login.php">戻る</a>';
+  }
+}
+```

@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  back:
+    build:
+      context: ./back
+    restart: always
+    ports:
+      - 8080:8080
+      - 8081:8081
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  front:
+    build:
+      context: ./front
+    environment:
+      NODE_ENV: production
+    ports:
+      - 80:3000

@@ -1,0 +1,62 @@
+.right-frame .react-tabs {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.right-frame .react-tabs__tab-list {
+  /* 上部全体 */
+  margin: 0;
+  padding: 0;
+  background-color: #656877;
+}
+
+.right-frame .react-tabs__tab {
+  color: #a0a2ae;
+  font-size: 12px;
+  background-color: #52566c;
+  font-family: Lato, 'Hiragino Maru Gothic Pro', 'Meiryo UI', Meiryo, 'MS PGothic', sans-serif;
+  display: inline-block;
+  border-bottom: none;
+  border-top: 2px solid #3a3d4d;
+  border-right: 2px solid #3a3d4d;
+  border-left: 2px solid #3a3d4d;
+  list-style: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.right-frame .react-tabs__tab--selected {
+  background-color: #52566c !important;
+  background: #f2f2f2;
+  color: #fff;
+  border-radius: initial;
+}
+
+.right-frame .react-tabs__tab--disabled {
+  cursor: default;
+}
+
+.right-frame .react-tabs__tab:focus {
+  outline: none;
+}
+
+.right-frame .react-tabs__tab:focus:after {
+  content: '';
+  position: absolute;
+  height: 5px;
+  left: -4px;
+  right: -4px;
+  bottom: -5px;
+  background: #fff;
+}
+
+.right-frame .react-tabs__tab-panel {
+  display: none;
+}
+
+.right-frame .react-tabs__tab-panel--selected {
+  display: block;
+}
+
+.right-frame .mt--10 {
+  margin-top: 10px;
+}
