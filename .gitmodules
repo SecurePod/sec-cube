@@ -1,0 +1,6 @@
+[submodule "seccube-back"]
+	path = seccube-back
+	url = https://github.com/malsuke/seccube-back
+[submodule "seccube-front"]
+	path = seccube-front
+	url = https://github.com/malsuke/seccube-front
