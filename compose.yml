@@ -10,6 +10,8 @@ services:
   back:
     build:
       context: ./seccube-back
+      args:
+        - target=deploy
     restart: always
     ports:
       - 8081:8081
