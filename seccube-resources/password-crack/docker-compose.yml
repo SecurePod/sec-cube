@@ -1,0 +1,7 @@
+version: "3"
+services:
+  defense:
+    build: ./defense
+  attack:
+    build: ./attack
+    tty: true
