@@ -10,11 +10,8 @@ services:
   back:
     build:
       context: ./seccube-back
-      args:
-        - target=deploy
+      target: deploy
     restart: always
-    ports:
-      - 8081:8081
     privileged: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -23,5 +20,3 @@ services:
       context: ./seccube-front
     environment:
       NODE_ENV: production
-    ports:
-      - 80:3000
