@@ -20,3 +20,6 @@ services:
       context: ./seccube-front
     environment:
       NODE_ENV: production
+      NEXT_PUBLIC_API_URL: ${API_URL}
+      NEXT_PUBLIC_HOST: ${HOST}
+    restart: always
