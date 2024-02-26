@@ -1,0 +1,19 @@
+name: compose test
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v4
+      - name: compose build test
+        run: docker-compose -f docker-compose.yml build
+      - name: compose up
+        run: docker-compose up -d
