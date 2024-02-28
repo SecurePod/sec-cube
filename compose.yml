@@ -21,7 +21,5 @@ services:
     build:
       context: ./seccube-front
     restart: always
-    env_file:
-      - .env
     environment:
       NODE_ENV: production
