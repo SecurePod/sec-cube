@@ -5,26 +5,26 @@ services:
     image: nginx
     ports:
       - 80:80
-    network_mode: host
+    extra_hosts:
+      - host.docker.internal:host-gateway
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    environment:
+      HOST: ${NEXT_PUBLIC_HOST}
+      API_HOST: ${NEXT_PUBLIC_API_URL}
   back:
     build:
       context: ./seccube-back
       target: deploy
     restart: always
-    ports:
-      - 8081:8081
     privileged: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   front:
     build:
       context: ./seccube-front
+    restart: always
+    env_file:
+      - .env
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_URL: ${API_URL}
-      NEXT_PUBLIC_HOST: ${HOST}
-    ports:
-      - 3000:3000
-    restart: always
