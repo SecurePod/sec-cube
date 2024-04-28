@@ -1,5 +1,8 @@
-.PHONY: help build build-local up down logs ps test
+.PHONY: help local up down logs
 .DEFAULT_GOAL := help
+
+local:
+	docker compose -f compose.dev.yml up --build
 
 up:
 	docker compose up -d --build
