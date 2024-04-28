@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx
+    ports:
+      - 443:443
+    volumes:
+      - ./nginx/dev:/etc/nginx
+  back:
+    build:
+      context: ./seccube-back
+      target: dev
+    restart: always
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./seccube-back:/app
+  front:
+    build:
+      context: ./seccube-front
+    restart: always
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
